@@ -1,0 +1,17 @@
+{
+  "name": "Launch Alert",
+  "version": "0.0.1",
+  "description": "Displays upcoming rocket launches. Click to see more detailed status in a popup.",
+  "icons": { "128": "rocket_normal.png" },
+
+  "permissions": [
+    "notifications",
+    "storage",
+    "https://launchlibrary.net/"
+  ],
+  "browser_action": {
+    "default_icon": "rocket_normal.png",
+    "default_popup": "popup.html"
+  },
+  "manifest_version": 2
+}

@@ -9,6 +9,11 @@
     "storage",
     "https://launchlibrary.net/"
   ],
+
+  "background": {
+      "scripts": ["utils.js"]
+  },
+
   "browser_action": {
     "default_icon": "rocket_normal.png",
     "default_popup": "popup.html"

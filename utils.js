@@ -6,6 +6,23 @@
 
     window.launchalert = window.launchalert || {};
 
+    /* Calculates the time difference from now. */
+    launchalert.getTimeRemaining =
+	function(endtime){
+	    var t = Date.parse(endtime) - Date.parse(new Date());
+	    var seconds = Math.floor( (t/1000) % 60 );
+	    var minutes = Math.floor( (t/1000/60) % 60 );
+	    var hours = Math.floor( (t/(1000*60*60)) % 24 );
+	    var days = Math.floor( t/(1000*60*60*24) );
+	    return {
+		'total': t,
+		'days': days,
+		'hours': hours,
+		'minutes': minutes,
+		'seconds': seconds
+	    };
+	}
+    
     launchalert.requestURL =
         function (url, responseType, callback, opt_errorStatusCallback) {
             var xhr = new XMLHttpRequest();

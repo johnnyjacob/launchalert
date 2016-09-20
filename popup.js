@@ -6,8 +6,6 @@
 
     function renderLaunchTable(statusText) {
         document.getElementById('status').innerHTML = statusText;
-        chrome.browserAction.setBadgeText({text: "1d"});
-        chrome.browserAction.setBadgeBackgroundColor({color: [255, 0, 0, 255]});
     }
 
     function fetchFailed(errorMessage) {

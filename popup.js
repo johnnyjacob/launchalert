@@ -2,7 +2,7 @@
 // Copyrights licensed under the BSD 3 Clause License.
 // See the accompanying LICENSE file for terms.
 (function () {
-    var nextFiveLaunches = 'https://launchlibrary.net/1.2/launch/next/1';
+    var nextLaunchQuery = 'https://launchlibrary.net/1.2/launch/next/1';
 
     function renderLaunchTable(statusText) {
         document.getElementById('status').innerHTML = statusText;
@@ -39,7 +39,7 @@
 
     function main() {
         renderLaunchTable('<img src="/images/gears.gif" class="loader" />');
-        launchalert.requestURL(nextFiveLaunches, "json", updateLaunchTable);
+        launchalert.requestURL(nextLaunchQuery, "json", updateLaunchTable);
 
     }
 

@@ -5,30 +5,48 @@
  value "popup.html".
  -->
 <html>
-  <head>
+<head>
     <title>Launch Alerts!</title>
     <style>
-      body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
-      }
-      #status {
-        /* avoid an excessively wide status text */
-        white-space: pre;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 900px;
-      }
+        body {
+            font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+            font-size: 100%;
+            width: 420px;
+            height: 100%;
+        }
+
+        ul {
+            float: left;
+            clear: right;
+            padding: 5px;
+            list-style: none outside none;
+        }
+
+        li {
+            float: left;
+            clear: left;
+            padding: 5px;
+            word-wrap: break-word;
+        }
+
+        .loader {
+            margin-left: 40%;
+        }
+
+        .logo {
+            height: 80px;
+            width: 80px;
+        }
     </style>
 
-  </head>
-  <body>
+</head>
+<body>
     <div id="status"></div>
     <div id="missionname"></div>
     <div id="launchschedule"></div>
     <div id="launchstatus"></div>
     <script src="utils.js"></script>
     <script src="popup.js"></script>
-  </body>
+</body>
 </html>
 

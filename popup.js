@@ -2,7 +2,6 @@
 // Copyrights licensed under the BSD 3 Clause License.
 // See the accompanying LICENSE file for terms.
 (function () {
-    var nextLaunchQuery = 'https://launchlibrary.net/1.2/launch/next/1';
 
     function renderLaunchTable(statusText) {
         document.getElementById('status').innerHTML = statusText;
@@ -37,8 +36,12 @@
 
     function main() {
         renderLaunchTable('<img src="/images/gears.gif" class="loader" />');
-        launchalert.requestURL(nextLaunchQuery, "json", updateLaunchTable);
 
+        // Pick from local storage.
+        chrome.storage.local.get('nextLaunch', function (items) {
+            var launchData = items['nextLaunch'];
+            updateLaunchTable (launchData);
+        });
     }
 
     main();

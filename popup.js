@@ -38,7 +38,7 @@
         renderLaunchTable('<img src="/images/gears.gif" class="loader" />');
 
         // Pick from local storage.
-        chrome.storage.local.get('nextLaunch', function (items) {
+        chrome.storage.sync.get('nextLaunch', function (items) {
             var launchData = items['nextLaunch'];
             updateLaunchTable (launchData);
         });

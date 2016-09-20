@@ -6,7 +6,7 @@
     var nextLaunchQuery = 'https://launchlibrary.net/1.2/launch/next/1';
 
     function updateBadge() {
-        chrome.storage.local.get('nextLaunch', function (items) {
+        chrome.storage.sync.get('nextLaunch', function (items) {
             var launchData = items['nextLaunch'];
             var timeRemaining = launchalert.getTimeRemaining(launchData.launches[0].net);
             var badgeText = "N/A";
@@ -38,7 +38,7 @@
 
     function updateLocalCache(launchData) {
         console.log ("Updating launchdata in local cache...");
-        chrome.storage.local.set({'nextLaunch': launchData});
+        chrome.storage.sync.set({'nextLaunch': launchData});
     }
 
     function main() {

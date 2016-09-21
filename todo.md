@@ -7,7 +7,8 @@ List of tasks to complete. Feel free to add your own.
 - [x] Update the badge with "Remaining time to launch".
 - [x] Store the launch data locally
 - [ ] Handle fetch errors
-- [ ] Schedule refresh based on a refresh rate.
+- [x] Schedule refresh based on a refresh rate.
+- [ ] Use the refresh rate set in the options page.
 - [ ] Throttle refreshes based on how close we are to the launch
 - [ ] Update based on launch status.
 
@@ -24,3 +25,4 @@ List of tasks to complete. Feel free to add your own.
 - [ ] Add filters based on agency, type of mission
 - [ ] Add refresh rate.
 - [ ] Add what fields the user would like to see in the popup.
+- [ ] Add the number of upcoming launches to display as an option. Limit to 5.

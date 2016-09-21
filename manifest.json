@@ -7,7 +7,8 @@
   },
   "permissions": [
     "notifications",
-    "storage",
+      "storage",
+      "alarms",
     "https://launchlibrary.net/"
   ],
   "background": {

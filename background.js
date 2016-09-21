@@ -41,6 +41,20 @@
         chrome.storage.sync.set({'nextLaunch': launchData});
     }
 
+    function refreshLaunchData() {
+        console.log ("Fetching launch data from the web...");
+        launchalert.requestURL(nextLaunchQuery, "json", updateLocalCache, fetchFailed);
+    }
+
+    function alarmHandler(alarm) {
+        console.log ("Alarm handler invoked...");
+        if (alarm.name == "LaunchDataRefresh") {
+            refreshLaunchData();
+            /* HACK : Not needed. Since we are already listening on storage.sync*/
+            updateBadge();
+        }
+    }
+
     function main() {
 	console.log ("Background : Main started...");
         updateBadge();
@@ -50,7 +64,13 @@
             updateBadge();
         });
 
-        launchalert.requestURL(nextLaunchQuery, "json", updateLocalCache, fetchFailed);
+        //Fetch launch data from the web.
+        refreshLaunchData();
+
+        // Set a timer for every 30 minutes.
+        //TODO : Read this value from the options page ?
+        chrome.alarms.create ("LaunchDataRefresh", {delayInMinutes:30});
+        chrome.alarms.onAlarm.addListener(alarmHandler);
     }
 
     // Run!

@@ -10,6 +10,13 @@
     function fetchFailed(errorMessage) {
     }
 
+    function getLaunchStatus (status) {
+        if (status == 1)
+            return "Launch is Go";
+
+        return "Launch is No Go!"
+    }
+
     function getAgencyLogo(agencyname, defaultLogo) {
         if (agencyname == "ISRO") {
             return "/logos/isro.png";
@@ -28,7 +35,7 @@
             + '<ul style="width: 300px">'
             + '<li>' + defaultLaunch.name + '</li>'
             + '<li>' + defaultLaunch.net + '</li>'
-            + '<li>' + defaultLaunch.status + '</li>'
+            + '<li>' + getLaunchStatus (defaultLaunch.status) + '</li>'
             + '<li>' + defaultLaunch.missions[0].description + '</li>'
             + '</ul>';
         renderLaunchTable(content);

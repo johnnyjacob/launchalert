@@ -1,6 +1,6 @@
 {
   "name": "Launch Alert",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Displays upcoming rocket launches. Click to see more detailed status in a popup.",
   "icons": {
     "128": "rocket_normal.png"

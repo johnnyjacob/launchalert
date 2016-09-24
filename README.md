@@ -14,7 +14,7 @@ Check [Todo.md](https://github.com/johnnyjacob/launchalert/blob/master/todo.md)
 
 ## Installation
 
-TBD - Yet to be published to google chrome extension store.
+To install from [Chrome Webstore, Click here](https://chrome.google.com/webstore/detail/launch-alert/lbkbijggplkjkbccgmhkahpfhjlleacd)
 
 ## License
 

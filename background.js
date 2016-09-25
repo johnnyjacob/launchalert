@@ -69,7 +69,7 @@
 
         // Set a timer for every 30 minutes.
         //TODO : Read this value from the options page ?
-        chrome.alarms.create ("LaunchDataRefresh", {delayInMinutes:30});
+        chrome.alarms.create ("LaunchDataRefresh", {periodInMinutes:15});
         chrome.alarms.onAlarm.addListener(alarmHandler);
     }
 

@@ -60,9 +60,55 @@
         }
     }
 
+    function agencies_create_db() {
+        if (!('indexedDB' in window)) {
+            console.log('This browser doesn\'t support IndexedDB');
+            return;
+        } else {
+            console.log('This browser supports IndexedDB');
+
+            var idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+            var agenciesDB = idb.open ("agencies", 1);
+
+            agenciesDB.onupgradeneeded = function() {
+                console.log ("IndexDB upgrade needed...");
+                var db = agenciesDB.result;
+                var store = db.createObjectStore("agenciesStore", {keyPath: "id"});
+                var index = store.createIndex("AgencyIndex", ["agency.name", "agency.abbrev"]);
+            }
+        }
+    }
+
+    function agencies_download() {
+        var getAllAgencyQuery = 'https://launchlibrary.net/1.4/agency?limit=-1';
+        var idb = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+        var agenciesDB = idb.open ("agencies", 1);
+
+        launchalert.requestURL(getAllAgencyQuery, "json", 
+                               function(agencyList) {
+                                   var db = agenciesDB.result;
+                                   var tx = db.transaction("agenciesStore", "readwrite");
+                                   var store = tx.objectStore("agenciesStore");
+
+                                   for (i = 0; i < (agencyList.agencies).length; i++) {
+                                       console.log("Adding.. ");
+                                       store.put(agencyList.agencies[i]);
+                                   }
+
+                                   tx.complete;
+                               },
+                               fetchFailed);
+    }
+
+    function agencies_update() {
+        agencies_create_db();
+        agencies_download();
+    }
+
     function main() {
 	console.log ("Background : Main started...");
         updateBadge();
+        agencies_update();
 
         chrome.storage.onChanged.addListener(function(changes, namespace) {
             //TODO : Reuse the object from here instead of doing a get inside updateBadge.

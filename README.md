@@ -12,7 +12,7 @@ Checkout the code and follow the guide here : https://developer.chrome.com/exten
 
 List of tasks to complete. Feel free to add your own.
 
-## Background 
+### Background 
 - [x] Fetch launch data in background.
 - [x] Update the badge with "Remaining time to launch".
 - [x] Store the launch data locally
@@ -22,7 +22,7 @@ List of tasks to complete. Feel free to add your own.
 - [ ] Throttle refreshes based on how close we are to the launch
 - [ ] Update based on launch status.
 
-## Popup
+### Popup
 - [x] Read data from local cache instead of online query.
 - [ ] Calculate the time difference between now and T0.
 - [ ] Start a countdown timer
@@ -31,7 +31,7 @@ List of tasks to complete. Feel free to add your own.
 - [ ] Add a webcast URL if available.
 - [ ] Handle error when data is not available.
 
-## Options
+### Options
 - [ ] Add filters based on agency, type of mission
 - [ ] Add refresh rate.
 - [ ] Add what fields the user would like to see in the popup.

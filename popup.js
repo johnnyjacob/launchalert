@@ -26,17 +26,16 @@
     }
 
     function updateLaunchTable(launchData) {
-        var defaultLaunch = launchData.launches[0];
+        var defaultLaunch = launchData;
 
-        var agencyLogo = getAgencyLogo(defaultLaunch.rocket.agencies[0].abbrev, defaultLaunch.rocket.imageURL);
         var content = '<ul style="width: 90px;">'
-            + '<li><img src="' + agencyLogo + '" class="logo"></li>'
+            + '<li><img src="' + defaultLaunch.image + '" class="logo"></li>'
             + '</ul>'
             + '<ul style="width: 300px">'
             + '<li>' + defaultLaunch.name + '</li>'
             + '<li>' + defaultLaunch.net + '</li>'
-            + '<li>' + getLaunchStatus (defaultLaunch.status) + '</li>'
-            + '<li>' + defaultLaunch.missions[0].description + '</li>'
+            + '<li>' + defaultLaunch.status.name + '</li>'
+            + '<li>' + defaultLaunch.mission.description + '</li>'
             + '</ul>';
         renderLaunchTable(content);
     }

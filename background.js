@@ -3,12 +3,12 @@
 // See the accompanying LICENSE file for terms.
 
 (function () {
-    var nextLaunchQuery = 'https://launchlibrary.net/1.2/launch/next/1';
+    var nextLaunchQuery = 'https://ll.thespacedevs.com/2.0.0/launch/upcoming/?limit=1&status=1';
 
     function updateBadge() {
         chrome.storage.sync.get('nextLaunch', function (items) {
             var launchData = items['nextLaunch'];
-            var timeRemaining = launchalert.getTimeRemaining(launchData.launches[0].net);
+            var timeRemaining = launchalert.getTimeRemaining(launchData.net);
             var badgeText = "N/A";
 
             if (timeRemaining.total > 0) {
@@ -38,7 +38,8 @@
 
     function updateLocalCache(launchData) {
         console.log ("Updating launchdata in local cache...");
-        chrome.storage.sync.set({'nextLaunch': launchData});
+        // Use the first result from the response.
+        chrome.storage.sync.set({'nextLaunch': launchData['results'][0]});
     }
 
     function refreshLaunchData() {

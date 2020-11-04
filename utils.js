@@ -52,5 +52,12 @@
             xhr.open("GET", url, true);
             xhr.send();
         };
+    /* API Endponts */
+    launchalert.queryNextLaunch = 'https://ll.thespacedevs.com/2.0.0/launch/upcoming/?limit=1&status=1';
+    launchalert.queryAgencies = 'https://ll.thespacedevs.com/2.0.0/agencies/';
 
+    /* Cache IDs*/
+    launchalert.cacheIDNextLaunch = 'nextLaunch';
+    launchalert.cacheIDAgencies = 'agencies';
+    
 })();

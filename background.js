@@ -3,8 +3,6 @@
 // See the accompanying LICENSE file for terms.
 
 (function () {
-    var nextLaunchQuery = 'https://ll.thespacedevs.com/2.0.0/launch/upcoming/?limit=1&status=1';
-
     function updateBadge() {
         chrome.storage.sync.get('nextLaunch', function (items) {
             var launchData = items['nextLaunch'];

@@ -22,8 +22,9 @@
                     badgeText = "N/A";
             }
 
-            console.log (badgeText);
             console.log ("Updating badge text..");
+            console.log (badgeText);
+
             chrome.browserAction.setBadgeText({text : badgeText});
         });
     }
@@ -34,15 +35,29 @@
         console.log ("Query failed...");
     }
 
-    function updateLocalCache(launchData) {
-        console.log ("Updating launchdata in local cache...");
+    function updateLocalCache(cacheID, data) {
+        console.log ("Updating " + cacheID + " in local cache...");
         // Use the first result from the response.
-        chrome.storage.sync.set({'nextLaunch': launchData['results'][0]});
+
+	//Fixme : Find out the length of the results and append.
+	var store = new Object();
+	store[cacheID.toString()] = data['results'];
+
+	chrome.storage.sync.set(store); 
+   }
+
+    function refreshData(remoteQuery, cacheID) {
+	//TBD
     }
 
     function refreshLaunchData() {
         console.log ("Fetching launch data from the web...");
-        launchalert.requestURL(nextLaunchQuery, "json", updateLocalCache, fetchFailed);
+        launchalert.requestURL(launchalert.queryNextLaunch, "json", updateLocalCache, launchalert.cacheIDNextLaunch, fetchFailed);
+    }
+
+    function refreshAgencies() {
+	console.log("Fetching agencies...");
+        launchalert.requestURL(launchalert.queryAgencies, "json", updateLocalCache, launchalert.cacheIDAgencies, fetchFailed);
     }
 
     function alarmHandler(alarm) {
@@ -65,6 +80,7 @@
 
         //Fetch launch data from the web.
         refreshLaunchData();
+	refreshAgencies();
 
         // Set a timer for every 30 minutes.
         //TODO : Read this value from the options page ?

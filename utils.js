@@ -24,7 +24,9 @@
 	}
     
     launchalert.requestURL =
-        function (url, responseType, callback, opt_errorStatusCallback) {
+        function (url, responseType, callback, cacheID,  opt_errorStatusCallback) {
+	    // console.log (url);
+	    // console.log (cacheID);
             var xhr = new XMLHttpRequest();
             if (responseType == "json")
             // WebKit doesn't handle xhr.responseType = "json" as of Chrome 25.
@@ -37,7 +39,7 @@
                     if (xhr.status == 200) {
                         var response =
                             (responseType == "json") ? JSON.parse(xhr.response) : xhr.response;
-                        callback(response);
+                        callback(cacheID, response);
                     } else {
                         if (opt_errorStatusCallback)
                             opt_errorStatusCallback(xhr.status);

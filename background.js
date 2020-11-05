@@ -46,18 +46,9 @@
 	chrome.storage.sync.set(store); 
    }
 
-    function refreshData(remoteQuery, cacheID) {
-	//TBD
-    }
-
-    function refreshLaunchData() {
-        console.log ("Fetching launch data from the web...");
-        launchalert.requestURL(launchalert.queryNextLaunch, "json", updateLocalCache, launchalert.cacheIDNextLaunch, fetchFailed);
-    }
-
-    function refreshAgencies() {
-	console.log("Fetching agencies...");
-        launchalert.requestURL(launchalert.queryAgencies, "json", updateLocalCache, launchalert.cacheIDAgencies, fetchFailed);
+    function refreshData (cacheID, query) {
+        console.log ("Fetching "+ cacheID +" from : " + query);
+        launchalert.requestURL(query, "json", updateLocalCache, cacheID, fetchFailed);
     }
 
     function alarmHandler(alarm) {

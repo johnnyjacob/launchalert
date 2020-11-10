@@ -5,7 +5,7 @@
 (function () {
     function updateBadge() {
         chrome.storage.sync.get('nextLaunch', function (items) {
-            var launchData = items['nextLaunch'];
+            var launchData = items['nextLaunch'][0];
             var timeRemaining = launchalert.getTimeRemaining(launchData.net);
             var badgeText = "N/A";
 

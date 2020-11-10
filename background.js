@@ -70,8 +70,8 @@
         });
 
         //Fetch launch data from the web.
-        refreshLaunchData();
-	refreshAgencies();
+        refreshData(launchalert.cacheIDNextLaunch, launchalert.queryNextLaunch);
+	    refreshData(launchalert.cacheIDAgencies, launchalert.queryAgencies);
 
         // Set a timer for every 30 minutes.
         //TODO : Read this value from the options page ?

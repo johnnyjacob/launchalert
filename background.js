@@ -59,27 +59,56 @@
             updateBadge();
         }
     }
-
-    function main() {
-	console.log ("Background : Main started...");
-        updateBadge();
-
-        chrome.storage.onChanged.addListener(function(changes, namespace) {
-            //TODO : Reuse the object from here instead of doing a get inside updateBadge.
-            updateBadge();
-        });
-
-        //Fetch launch data from the web.
-        refreshData(launchalert.cacheIDNextLaunch, launchalert.queryNextLaunch);
-	    refreshData(launchalert.cacheIDAgencies, launchalert.queryAgencies);
-
-        // Set a timer for every 30 minutes.
-        //TODO : Read this value from the options page ?
-        chrome.alarms.create ("LaunchDataRefresh", {periodInMinutes:15});
-        chrome.alarms.onAlarm.addListener(alarmHandler);
+    /**
+     * Creates the indexedDB
+     */
+    function createDB () {
+        console.log ("Creating DB");
+        var request = indexedDB.open(launchalert.dbname, 2);
+        
+        request.onerror = function (event) {
+            console.log ("DB Error.");
+        }
+        
+        request.onupgradeneeded = function (event) {
+            console.log ("On upgrade needed .. ");
+            var db = event.target.result;
+            if (!db.objectStoreNames.contains(launchalert.cacheIDAgencies)) {
+                var objectStore = db.createObjectStore (launchalert.cacheIDAgencies, {keyPath: "id"});
+                //Create any index if needed.
+            }
+        }
+        request.onsuccess = function (e) {
+            console.log ("DB Created or opened...");
+            launchalert.db = e.target.result;
+        }
+        request.onerror = function(e) {
+            console.log ("Unable to create or open the DB");
+            console.dir(e);
+        }
     }
 
-    // Run!
-    main();
+function main() {
+    console.log ("Background : Main started...");
+    createDB();
+    updateBadge();
+    
+    chrome.storage.onChanged.addListener(function(changes, namespace) {
+        //TODO : Reuse the object from here instead of doing a get inside updateBadge.
+        updateBadge();
+    });
+    
+    //Fetch launch data from the web.
+    //refreshData(launchalert.cacheIDNextLaunch, launchalert.queryNextLaunch);
+    refreshData(launchalert.cacheIDAgencies, launchalert.queryAgencies);
+    
+    // Set a timer for every 30 minutes.
+    //TODO : Read this value from the options page ?
+    chrome.alarms.create ("LaunchDataRefresh", {periodInMinutes:15});
+    chrome.alarms.onAlarm.addListener(alarmHandler);
+}
+
+// Run!
+main();
 
 })();

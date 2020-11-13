@@ -21,11 +21,11 @@
 		'minutes': minutes,
 		'seconds': seconds
 	    };
-	}
-    
+    }
+
     launchalert.requestURL =
         function (url, responseType, callback, cacheID,  opt_errorStatusCallback) {
-	    // console.log (url);
+	        console.log (url);
 	    // console.log (cacheID);
             var xhr = new XMLHttpRequest();
             if (responseType == "json")
@@ -56,10 +56,14 @@
         };
     /* API Endponts */
     launchalert.queryNextLaunch = 'https://ll.thespacedevs.com/2.0.0/launch/upcoming/?limit=1&status=1';
-    launchalert.queryAgencies = 'https://ll.thespacedevs.com/2.0.0/agencies/';
+    launchalert.queryAgencies = 'https://ll.thespacedevs.com/2.0.0/agencies/?limit=100';
 
     /* Cache IDs*/
     launchalert.cacheIDNextLaunch = 'nextLaunch';
     launchalert.cacheIDAgencies = 'agencies';
+
+    /* Indexed DBs */
+    launchalert.dbname = "launchalert";
+    launchalert.db = null;
     
 })();

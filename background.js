@@ -8,27 +8,27 @@
             var launchData = items['nextLaunch'][0];
             var timeRemaining = launchalert.getTimeRemaining(launchData.net);
             var badgeText = "N/A";
-
+            
             if (timeRemaining.total > 0) {
                 if (timeRemaining.days > 0)
-                    badgeText = String (timeRemaining.days + "d");
+                badgeText = String (timeRemaining.days + "d");
                 else if (timeRemaining.hours > 0) 
-                    badgeText = String (timeRemaining.hours + "h");
+                badgeText = String (timeRemaining.hours + "h");
                 else if (timeRemaining.minutes > 0) 
-                    badgeText = String (timeRemaining.minutes + "m");
+                badgeText = String (timeRemaining.minutes + "m");
                 else if (timeRemaining.seconds > 0) 
-                    badgeText = String (timeRemaining.seconds + "s");
+                badgeText = String (timeRemaining.seconds + "s");
                 else
-                    badgeText = "N/A";
+                badgeText = "N/A";
             }
-
+            
             console.log ("Updating badge text..");
             console.log (badgeText);
-
+            
             chrome.browserAction.setBadgeText({text : badgeText});
         });
     }
-
+    
     function fetchFailed(errorMessage) {
         //TODO : Print the right error message
         //TODO : Error handling

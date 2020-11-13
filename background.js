@@ -55,19 +55,26 @@
     function updateLocalCache(cacheID, data) {
         console.log ("Updating " + cacheID + " in local cache...");
         // Use the first result from the response.
-
-	//Fixme : Find out the length of the results and append.
-	var store = new Object();
-	store[cacheID.toString()] = data['results'];
-
-	chrome.storage.sync.set(store); 
-   }
-
+        if (data['next']!= null) {
+            console.log ("API is paged. Should we call the rest?")
+        }
+        //Fixme : Find out the length of the results and append.
+        var store = new Object();
+        store[cacheID.toString()] = data['results'];
+        chrome.storage.sync.set(store); 
+    }
+    
     function refreshData (cacheID, query) {
         console.log ("Fetching "+ cacheID +" from : " + query);
-        launchalert.requestURL(query, "json", updateLocalCache, cacheID, fetchFailed);
+        var request_worker = new Worker(chrome.runtime.getURL('worker-requests.js'));
+        request_worker.postMessage ([cacheID, query]);
+        request_worker.onmessage = function(event) {
+            //Update the local cache here.
+            console.log ("Background.js : Message recieved " + event.data[0]);
+            updateLocalDB(event.data[0], event.data[1]);
+        };
     }
-
+    
     function alarmHandler(alarm) {
         console.log ("Alarm handler invoked...");
         if (alarm.name == "LaunchDataRefresh") {

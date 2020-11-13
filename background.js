@@ -34,7 +34,24 @@
         //TODO : Error handling
         console.log ("Query failed...");
     }
-
+    /**
+     * 
+     * @param {string} cacheID ID of the objectstore.
+     * @param {JSON} data JSON objects to be added / updated.
+     */
+    function updateLocalDB(cacheID, data) {
+        var agencyObjectStore = launchalert.db.transaction(cacheID, "readwrite").objectStore(cacheID);
+        data['results'].forEach(function(agency) {
+            console.log ("adding agency : " + agency['id']);
+            agencyObjectStore.put(agency);
+        });
+        //If the API is paged, then download all the objects.
+        if (data['next']!= null) {
+            console.log ("API is paged. Calling next.")
+            refreshData(cacheID, data['next']);
+        }
+    }
+    
     function updateLocalCache(cacheID, data) {
         console.log ("Updating " + cacheID + " in local cache...");
         // Use the first result from the response.

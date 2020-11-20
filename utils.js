@@ -54,13 +54,27 @@
             xhr.open("GET", url, true);
             xhr.send();
         };
-    /* API Endponts */
+    /* API Endponts (Obsolete) */
     launchalert.queryNextLaunch = 'https://ll.thespacedevs.com/2.0.0/launch/upcoming/?limit=1&status=1';
     launchalert.queryAgencies = 'https://ll.thespacedevs.com/2.0.0/agencies/?limit=100';
 
-    /* Cache IDs*/
+    /* Cache IDs (Obsolete)*/
     launchalert.cacheIDNextLaunch = 'nextLaunch';
     launchalert.cacheIDAgencies = 'agencies';
+
+    /* APIs and Cache configuration */
+    launchalert.cache = {};
+    launchalert.cache['nextLaunch'] = {
+        id: 'nextLaunch',
+        query: 'https://ll.thespacedevs.com/2.0.0/launch/upcoming/?limit=1&status=1',
+        store: 'sync'
+    };
+
+    launchalert.cache['agencies'] = {
+        id: 'agencies',
+        query: 'https://ll.thespacedevs.com/2.0.0/agencies/?limit=100',
+        store: 'db'
+    };
 
     /* Indexed DBs */
     launchalert.dbname = "launchalert";

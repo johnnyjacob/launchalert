@@ -64,13 +64,13 @@
         chrome.storage.sync.set(store); 
     }
     
-    function refreshData (cacheID, query) {
-        console.log ("Fetching "+ cacheID +" from : " + query);
+    function refreshData (cache) {
+        console.log ("Refresh Data : Fetching "+ cache['id'] +" from : " + cache['query']);
         var request_worker = new Worker(chrome.runtime.getURL('worker-requests.js'));
-        request_worker.postMessage ([cacheID, query]);
+        request_worker.postMessage ([cache['id'], cache['query']]);
         request_worker.onmessage = function(event) {
             //Update the local cache here.
-            console.log ("Background.js : Message recieved " + event.data[0]);
+            console.log ("Refresh Data : Message recieved " + event.data[0]);
             updateLocalDB(event.data[0], event.data[1]);
         };
     }
@@ -124,7 +124,7 @@ function main() {
     
     //Fetch launch data from the web.
     //refreshData(launchalert.cacheIDNextLaunch, launchalert.queryNextLaunch);
-    refreshData(launchalert.cacheIDAgencies, launchalert.queryAgencies);
+    refreshData(launchalert.cache['agencies']);
     
     // Set a timer for every 30 minutes.
     //TODO : Read this value from the options page ?

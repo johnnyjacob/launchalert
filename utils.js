@@ -21,10 +21,12 @@
 		'minutes': minutes,
 		'seconds': seconds
 	    };
-	}
-    
+    }
+
     launchalert.requestURL =
-        function (url, responseType, callback, opt_errorStatusCallback) {
+        function (url, responseType, callback, cacheID,  opt_errorStatusCallback) {
+	        console.log (url);
+	    // console.log (cacheID);
             var xhr = new XMLHttpRequest();
             if (responseType == "json")
             // WebKit doesn't handle xhr.responseType = "json" as of Chrome 25.
@@ -37,7 +39,7 @@
                     if (xhr.status == 200) {
                         var response =
                             (responseType == "json") ? JSON.parse(xhr.response) : xhr.response;
-                        callback(response);
+                        callback(cacheID, response);
                     } else {
                         if (opt_errorStatusCallback)
                             opt_errorStatusCallback(xhr.status);
@@ -52,5 +54,30 @@
             xhr.open("GET", url, true);
             xhr.send();
         };
+    /* API Endponts (Obsolete) */
+    launchalert.queryNextLaunch = 'https://ll.thespacedevs.com/2.0.0/launch/upcoming/?limit=1&status=1';
+    launchalert.queryAgencies = 'https://ll.thespacedevs.com/2.0.0/agencies/?limit=100';
 
+    /* Cache IDs (Obsolete)*/
+    launchalert.cacheIDNextLaunch = 'nextLaunch';
+    launchalert.cacheIDAgencies = 'agencies';
+
+    /* APIs and Cache configuration */
+    launchalert.cache = {};
+    launchalert.cache['nextLaunch'] = {
+        id: 'nextLaunch',
+        query: 'https://ll.thespacedevs.com/2.0.0/launch/upcoming/?limit=1&status=1',
+        store: 'sync'
+    };
+
+    launchalert.cache['agencies'] = {
+        id: 'agencies',
+        query: 'https://ll.thespacedevs.com/2.0.0/agencies/?limit=100',
+        store: 'db'
+    };
+
+    /* Indexed DBs */
+    launchalert.dbname = "launchalert";
+    launchalert.db = null;
+    
 })();

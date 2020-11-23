@@ -1,30 +1,26 @@
 {
-    "name": "Launch Alert",
-    "version": "0.0.2",
-    "description": "Displays upcoming rocket launches. Click to see more detailed status in a popup.",
-    "icons": {
-        "128": "rocket_normal.png"
-    },
-    "permissions": [
-        "notifications",
-        "storage",
-        "alarms",
-        "https://launchlibrary.net/"
-    ],
-    "background": {
-        "scripts": [
-	    "utils.js",
-	    "background.js"
-        ]
-    },
-    "options_ui": {
-        "page":"options.html",
-        "chrome_style":true
-    },
-    "browser_action": {
-        "default_icon": "rocket_normal.png",
-        "default_popup": "popup.html"
-    },
-
-    "manifest_version": 2
+  "name": "Launch Alert",
+  "version": "0.2",
+  "description": "Displays upcoming rocket launches. Click to see more detailed status in a popup.",
+  "icons": {
+    "128": "rocket_normal.png"
+  },
+  "permissions": [
+    "notifications",
+      "storage",
+      "alarms",
+    "https://ll.thespacedevs.com/"
+  ],
+  "background": {
+    "scripts": [
+	"utils.js",
+  "background.js",
+  "worker-requests.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": "rocket_normal.png",
+    "default_popup": "popup.html"
+  },
+  "manifest_version": 2
 }

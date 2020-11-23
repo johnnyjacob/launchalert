@@ -27,7 +27,7 @@
             
             chrome.browserAction.setBadgeText({text : badgeText});
 
-            if (launchData.launches[0].status == 1)
+            if (launchData.status.id == 1)
                 chrome.browserAction.setBadgeBackgroundColor ({color:"#3cba54"});
             else
                 chrome.browserAction.setBadgeBackgroundColor ({color:"#db3236"});

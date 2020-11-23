@@ -26,7 +26,7 @@
     }
 
     function updateLaunchTable(launchData) {
-        var defaultLaunch = launchData;
+        var defaultLaunch = launchData[0];
 
         var content = '<ul style="width: 90px;">'
             + '<li><img src="' + defaultLaunch.image + '" class="logo"></li>'

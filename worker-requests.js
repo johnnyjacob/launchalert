@@ -6,12 +6,11 @@
 //aggregate the data into a list using multiple calls.
 
 onmessage = function (e) {
-    console.log ("message : " + e);
-    console.log ("Worker recieved a message " + e.data[0] + " second param : " + e.data[1]);
+    console.log ("Worker recieved a message " + e.data[1] + " Cache ID : " + e.data[0]['id']);
     //FIXME:
     var responseType = "json";
     var url = e.data[1];
-    var cacheID = e.data[0];
+    var cacheID = e.data[0]['id'];
     var xhr = new XMLHttpRequest();
     if (responseType == "json")
         // WebKit doesn't handle xhr.responseType = "json" as of Chrome 25.
@@ -23,8 +22,7 @@ onmessage = function (e) {
     if (xhr.readyState == 4) {
         if (xhr.status == 200) {
                 var response = (responseType == "json") ? JSON.parse(xhr.response) : xhr.response;
-                //callback(cacheID, response);
-                postMessage([cacheID, response]);
+                postMessage([e.data[0], response]);
         } else {
             console.log ("request-worker : HTTP Response code : " + xhr.status);
             if (opt_errorStatusCallback)

@@ -39,8 +39,9 @@
      * @param {string} cacheID ID of the objectstore.
      * @param {JSON} data JSON objects to be added / updated.
      */
-    function updateLocalDB(cacheID, data) {
-        var agencyObjectStore = launchalert.db.transaction(cacheID, "readwrite").objectStore(cacheID);
+    function updateLocalDB(cache, data) {
+        console.log ("Updating local db for " + cache['id'] );
+        var agencyObjectStore = launchalert.db.transaction(cache['id'], "readwrite").objectStore(cache['id']);
         data['results'].forEach(function(agency) {
             console.log ("adding agency : " + agency['id']);
             agencyObjectStore.put(agency);
@@ -48,37 +49,44 @@
         //If the API is paged, then download all the objects.
         if (data['next']!= null) {
             console.log ("API is paged. Calling next.")
-            refreshData(cacheID, data['next']);
+            refreshData(cache, data['next']);
+        } else {
+            console.log ("API is not paged or we are at the end of it")
         }
     }
     
-    function updateLocalCache(cacheID, data) {
-        console.log ("Updating " + cacheID + " in local cache...");
+    function updateLocalCache(cache, data) {
+        console.log ("Updating local sync cache for  " + cache['id']);
         // Use the first result from the response.
         if (data['next']!= null) {
             console.log ("API is paged. Should we call the rest?")
         }
         //Fixme : Find out the length of the results and append.
         var store = new Object();
-        store[cacheID.toString()] = data['results'];
+        store[cache['id'].toString()] = data['results'];
         chrome.storage.sync.set(store); 
     }
     
-    function refreshData (cache) {
-        console.log ("Refresh Data : Fetching "+ cache['id'] +" from : " + cache['query']);
+    function refreshData (cache, query) {
+        console.log ("Refresh Data : Fetching "+ cache['id'] +" from : " + query);
         var request_worker = new Worker(chrome.runtime.getURL('worker-requests.js'));
-        request_worker.postMessage ([cache['id'], cache['query']]);
+        //Send the cache config object.
+        request_worker.postMessage ([cache, query]);
         request_worker.onmessage = function(event) {
             //Update the local cache here.
             console.log ("Refresh Data : Message recieved " + event.data[0]);
-            updateLocalDB(event.data[0], event.data[1]);
+            if (cache.store == "db")
+                updateLocalDB(event.data[0], event.data[1]);
+            if (cache.store == "sync")
+                updateLocalCache(event.data[0], event.data[1]);
+            
         };
     }
     
     function alarmHandler(alarm) {
         console.log ("Alarm handler invoked...");
         if (alarm.name == "LaunchDataRefresh") {
-            refreshLaunchData();
+            refreshData(launchalert.cache['nextLaunch'], launchalert.cache['nextLaunch']['query']);
             /* HACK : Not needed. Since we are already listening on storage.sync*/
             updateBadge();
         }
@@ -123,8 +131,8 @@ function main() {
     });
     
     //Fetch launch data from the web.
-    //refreshData(launchalert.cacheIDNextLaunch, launchalert.queryNextLaunch);
-    refreshData(launchalert.cache['agencies']);
+    refreshData(launchalert.cache['agencies'], launchalert.cache['agencies']['query']);
+    refreshData(launchalert.cache['nextLaunch'], launchalert.cache['nextLaunch']['query']);
     
     // Set a timer for every 30 minutes.
     //TODO : Read this value from the options page ?

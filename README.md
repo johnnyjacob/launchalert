@@ -2,7 +2,7 @@
 
 Displays the next rocket launch scheduled from planet earth.
 
-Powered by LaunchLibrary.net. 
+Powered by [The Space Devs](https://thespacedevs.com/)
 
 ## Development
 
